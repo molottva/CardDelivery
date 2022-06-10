@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group 'ru.netology'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 11
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation group: 'org.testng', name: 'testng', version: '7.6.0'
+    implementation group: 'com.codeborne', name: 'selenide', version: '6.5.2'
+}
+
+test {
+    useTestNG()
+    systemProperty('selenide.headless', System.getProperty('selenide.headless'))
+}
