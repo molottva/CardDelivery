@@ -27,7 +27,7 @@ public class CardDeliveryTest {
         form.$x(".//span[@data-test-id='phone']//child::input").val("+79211234567");
         form.$x(".//label[@data-test-id='agreement']").click();
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
-        notification.should(visible, Duration.ofSeconds(1));
+        notification.should(visible, Duration.ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
         notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
         String expectedDate = form.$x(".//span[@data-test-id='date']//child::input[@placeholder]").getValue();
