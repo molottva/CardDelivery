@@ -2,7 +2,6 @@ package ru.netology;
 
 import com.codeborne.selenide.SelenideElement;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.text.DateFormat;
@@ -12,6 +11,7 @@ import java.util.GregorianCalendar;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
+import static java.lang.Long.parseLong;
 import static java.time.Duration.ofSeconds;
 import static java.util.Calendar.DAY_OF_YEAR;
 import static org.testng.Assert.assertEquals;
@@ -30,10 +30,6 @@ public class CardDeliveryTest {
     //создание даты встречи с заданным кол-вом дней от сегодня
     public Calendar meetingDate(int addDays) {
         Calendar date = new GregorianCalendar();
-        date.set(Calendar.HOUR, 0);
-        date.set(Calendar.MINUTE, 0);
-        date.set(Calendar.SECOND, 0);
-        date.set(Calendar.MILLISECOND, 0);
         date.add(DAY_OF_YEAR, addDays);
         return date;
     }
@@ -44,17 +40,18 @@ public class CardDeliveryTest {
         return dateFormat.format(meetingDate.getTime());
     }
 
-    //todo fix method
     //выбор кликом дня в виджете календаря
     public void selectMeetingDate(Calendar date) {
-        String meetingDate = String.valueOf(date.getTimeInMillis());
-        boolean notMatches = true;
-        while (notMatches) {
+        long meetingDateMax = date.getTimeInMillis();
+        long meetingDateMin = meetingDateMax - 86_400_000;
+        boolean loop = true;
+        while (loop) {
             int lastIndex = calendarMenu.$$x(".//td[@data-day]").size();
             for (int i = 0; i < lastIndex; i++) {
-                String dataDay = getMillisecondFromCalendar(i);
-                if (dataDay.equals(meetingDate)) {
+                long dataDay = getMillisecondFromCalendar(i);
+                if (dataDay >= meetingDateMin && dataDay <= meetingDateMax) {
                     calendarMenu.$$x(".//td[@data-day]").get(i).click();
+                    loop = false;
                     return;
                 }
             }
@@ -63,9 +60,8 @@ public class CardDeliveryTest {
     }
 
     //получение строки миллисекунд по индексу дня в виджете календаря
-    public String getMillisecondFromCalendar(int i) {
-        String dataDay = calendarMenu.$$x(".//td[@data-day]").get(i).getDomAttribute("data-day");
-        return dataDay;
+    public long getMillisecondFromCalendar(int i) {
+        return parseLong(calendarMenu.$$x(".//td[@data-day]").get(i).getDomAttribute("data-day"));
     }
 
     //получение город из поля формы
@@ -492,21 +488,15 @@ public class CardDeliveryTest {
         cityMenu.should(hidden);
     }
 
-    //todo fix test
-    @Ignore
     @Test
-    public void shouldSelectDateTestOne() {
+    public void shouldSelectDateThrough7DaysTest() {
         form.$x(".//span[@data-test-id='city']//child::input").val("Петрозаводск");
-
         form.$x(".//span[@data-test-id='date']//child::button").click();
         calendarMenu.should(visible);
-
-        String expectedDay = inputMeetingDate(meetingDate(4));
-        selectMeetingDate(meetingDate(4));
-
+        String expectedDay = inputMeetingDate(meetingDate(7));
+        selectMeetingDate(meetingDate(7));
         calendarMenu.should(hidden);
         assertEquals(form.$x(".//span[@data-test-id='date']//child::input").getValue(), expectedDay);
-
         form.$x(".//span[@data-test-id='name']//child::input").val("Иванов Иван");
         form.$x(".//span[@data-test-id='phone']//child::input").val("+79211234567");
         form.$x(".//label[@data-test-id='agreement']").click();
@@ -520,18 +510,25 @@ public class CardDeliveryTest {
         notification.should(hidden);
     }
 
-//    public void shouldSelectCityTest() {
-//        form.$x(".//span[@data-test-id='city']//child::input").val("Петрозаводск");
-//        form.$x(".//span[@data-test-id='name']//child::input").val("Иванов Иван");
-//        form.$x(".//span[@data-test-id='phone']//child::input").val("+79211234567");
-//        form.$x(".//label[@data-test-id='agreement']").click();
-//        form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
-//        notification.should(visible, Duration.ofSeconds(15));
-//        notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-//        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-//        String expectedDate = getExpectedDate();
-//        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
-//        notification.$x(".//button").click();
-//        notification.should(hidden);
-//    }
+    @Test
+    public void shouldSelectDateThrough30DaysTest() {
+        form.$x(".//span[@data-test-id='city']//child::input").val("Петрозаводск");
+        form.$x(".//span[@data-test-id='date']//child::button").click();
+        calendarMenu.should(visible);
+        String expectedDay = inputMeetingDate(meetingDate(30));
+        selectMeetingDate(meetingDate(30));
+        calendarMenu.should(hidden);
+        assertEquals(form.$x(".//span[@data-test-id='date']//child::input").getValue(), expectedDay);
+        form.$x(".//span[@data-test-id='name']//child::input").val("Иванов Иван");
+        form.$x(".//span[@data-test-id='phone']//child::input").val("+79211234567");
+        form.$x(".//label[@data-test-id='agreement']").click();
+        form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
+        notification.should(visible, ofSeconds(15));
+        notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
+        String expectedDate = getExpectedDate();
+        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//button").click();
+        notification.should(hidden);
+    }
 }
