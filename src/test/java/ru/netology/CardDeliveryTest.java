@@ -48,11 +48,15 @@ public class CardDeliveryTest {
     //выбор кликом дня в виджете календаря
     public void selectMeetingDate(Calendar date) {
         String meetingDate = String.valueOf(date.getTimeInMillis());
-        int lastIndex = calendarMenu.$$x(".//td[@data-day]").size();
-        for (int i = 0; i < lastIndex; i++) {
-            if (getMillisecondFromCalendar(i).equals(meetingDate)) {
-                calendarMenu.$$x(".//td[@data-day]").get(i).click();
-                return;
+        boolean notMatches = true;
+        while (notMatches) {
+            int lastIndex = calendarMenu.$$x(".//td[@data-day]").size();
+            for (int i = 0; i < lastIndex; i++) {
+                String dataDay = getMillisecondFromCalendar(i);
+                if (dataDay.equals(meetingDate)) {
+                    calendarMenu.$$x(".//td[@data-day]").get(i).click();
+                    return;
+                }
             }
             calendarMenu.$x(".//div[@data-step='1']").click();
         }
@@ -60,7 +64,8 @@ public class CardDeliveryTest {
 
     //получение строки миллисекунд по индексу дня в виджете календаря
     public String getMillisecondFromCalendar(int i) {
-        return calendarMenu.$$x(".//td[@data-day]").get(i).getText();
+        String dataDay = calendarMenu.$$x(".//td[@data-day]").get(i).getDomAttribute("data-day");
+        return dataDay;
     }
 
     //получение город из поля формы
@@ -488,7 +493,7 @@ public class CardDeliveryTest {
     }
 
     //todo fix test
-    @Ignore
+//    @Ignore
     @Test
     public void shouldSelectDateTestOne() {
         form.$x(".//span[@data-test-id='city']//child::input").val("Петрозаводск");
@@ -496,8 +501,8 @@ public class CardDeliveryTest {
         form.$x(".//span[@data-test-id='date']//child::button").click();
         calendarMenu.should(visible);
 
-        String expectedDay = inputMeetingDate(meetingDate(360));
-        selectMeetingDate(meetingDate(360));
+        String expectedDay = inputMeetingDate(meetingDate(4));
+        selectMeetingDate(meetingDate(4));
 
         calendarMenu.should(hidden);
         assertEquals(form.$x(".//span[@data-test-id='date']//child::input").getValue(), expectedDay);
