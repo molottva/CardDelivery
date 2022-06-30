@@ -71,7 +71,7 @@ public class CardDeliveryTest {
 
     @BeforeMethod
     public void setup() {
-        open("http://127.0.0.1:9999/");
+        open("http://localhost:9999/");
     }
 
     @Test
@@ -83,9 +83,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -101,9 +100,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -119,9 +117,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -137,9 +134,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -226,9 +222,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -244,9 +239,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -262,9 +256,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -433,9 +426,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -454,9 +446,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -475,9 +466,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -503,9 +493,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
@@ -525,9 +514,8 @@ public class CardDeliveryTest {
         form.$x(".//span[contains(text(), 'Забронировать')]//ancestor::button").click();
         notification.should(visible, ofSeconds(15));
         notification.$x(".//div[@class='notification__title']").should(text("Успешно"));
-        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на"));
-        String expectedDate = getExpectedDate();
-        notification.$x(".//div[@class='notification__content']").should(text(expectedDate));
+        notification.$x(".//div[@class='notification__content']").should(text("Встреча успешно забронирована на "
+                + getExpectedDate()));
         notification.$x(".//button").click();
         notification.should(hidden);
     }
